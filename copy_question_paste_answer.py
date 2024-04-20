@@ -78,7 +78,6 @@ def sequence_start():
     except:
         pya.alert("Sequence failed!", "Alert", "Close")
 
-#input_result = pya.confirm("Before pressing Start: Set the zoom value to 10%, Point the mouse to the main topic and wait 5 seconds to start the input sequence. \n\nWhen the sequence has started, wait for it to finish.", "Alert", ["Start", "Cancel"])
 prompt_text = pya.prompt("Type file name located at export folder\n\nBefore pressing OK: Set the zoom value to 10%, Point the mouse to the main topic and wait 5 seconds to start the input sequence. \n\nWhen the sequence has started, wait for it to finish.", "Enter file")
 
 if prompt_text == None or prompt_text == "":
