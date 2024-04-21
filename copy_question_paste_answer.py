@@ -24,20 +24,28 @@ def seperate_dot(string):
     return new_text.strip()
 
 def add_question(string):
+    if string == "":
+        pya.alert("A question is empty!", "Fatal Error", "Close")
+        raise Exception("A question is empty")
+    
     questions.append(string)
 
 def add_answer(string):
+    if string == "":
+        pya.alert("A question doesn't have a answer!", "Fatal Error", "Close")
+        raise Exception("A question doesn't have a answer")
+
     answers.append(string)
 
 def read_text_file(file):
     try:
         found_file = open(file, "r")
     except:
-        pya.alert("The file doesn't exist!", "Fatal Error", "Close")
+        pya.alert("The file doesn't exist!", "Error", "Close")
         raise Exception("The file doesn't exist!")
     
     lines = found_file.readlines()
-    print("print from read text")
+
     for line in lines:
         
         if "#" in line:
@@ -68,6 +76,7 @@ def sequence_test(index):
 
 def sequence_start():
     if not len(questions) == len(answers):
+        pya.alert("The file contains questions and answers that aren't the same size!", "Fatal Error", "Close")
         raise Exception("The questions and answers sizes are not the same!") # returns error if questions and answers are not same size
 
     try:
@@ -76,7 +85,7 @@ def sequence_start():
         
         pya.alert("Sequence finished", "Alert", "Close")
     except:
-        pya.alert("Sequence failed!", "Alert", "Close")
+        pya.alert("Sequence failed!", "Fatal Error", "Close")
 
 prompt_text = pya.prompt("Type file name located at export folder\n\nBefore pressing OK: Set the zoom value to 10%, Point the mouse to the main topic and wait 5 seconds to start the input sequence. \n\nWhen the sequence has started, wait for it to finish.", "Enter file")
 
