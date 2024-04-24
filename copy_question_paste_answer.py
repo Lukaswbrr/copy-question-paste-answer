@@ -59,10 +59,6 @@ def read_text_file(file):
         
     
     found_file.close()
-        
-
-def text_parser(text_lines):
-    print("h")
 
 def sequence_test(index):
     pyperclip.copy(questions[index])
