@@ -2,26 +2,10 @@ import pyperclip
 import pyautogui as pya
 import time
 
+import text_parser as tp
+
 questions = []
 answers = []
-
-def convert_two_spaces_to_newline(string):
-    text_split = string.split("  ")
-    new_text = ""
-
-    for k in text_split:
-        new_text += k + "\n"
-    
-    return new_text
-
-def seperate_dot(string):
-    text_split = string.split(".")
-    new_text = ""
-
-    for k in text_split:
-        new_text += k.strip() + "\n"
-    
-    return new_text.strip()
 
 def add_question(string):
     if string == "":
@@ -33,6 +17,7 @@ def add_question(string):
 def add_answer(string):
     if string == "":
         pya.alert("A question doesn't have a answer!", "Fatal Error", "Close")
+        print( questions )
         raise Exception("A question doesn't have a answer")
 
     answers.append(string)
@@ -53,11 +38,25 @@ def read_text_file(file):
 
         text_found = line.split("\t")
         
-        question_found = text_found[0]
-        answer_found = text_found[1]
+        question_found = ""
+        answer_found = ""
+        #print(len(text_found))
+        #print(text_found[1])
+        #print(type(text_found[1]))
+        if "{{c1::" in text_found[0]:
+            print("no answer!")
+            question_found, answer_found = tp.seperate_occlusion(text_found[0])
+            question_found = question_found.strip()
+            answer_found = answer_found.strip()
+        else:
+            question_found = text_found[0]
+            answer_found = text_found[1]
+
+            answer_found = tp.seperate_dot(answer_found)
 
         add_question(question_found)
-        add_answer(seperate_dot(answer_found))
+        add_answer(answer_found)
+        
     
     found_file.close()
         
@@ -73,6 +72,7 @@ def sequence_test(index):
     time.sleep(0.5)
     pya.hotkey("ctrl", "v")
     pya.leftClick()
+
 
 def sequence_start():
     if not len(questions) == len(answers):
